@@ -4,7 +4,7 @@
  * @Author: null
  * @Date: 2022-07-25 22:50:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2022-07-25 23:25:28
+ * @LastEditTime: 2022-07-26 00:06:03
  */
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
@@ -43,34 +43,105 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.ViewColumn.One,
         {
           localResourceRoots: [
-            vscode.Uri.file(path.join(context.extensionPath, "imgs")),
-          ],
+            vscode.Uri.file(path.join(context.extensionPath, "build")),
+          ], // 为了引入本地资源设置资源的root位置
+          enableScripts: true, // 启用JS，默认禁用
+          retainContextWhenHidden: true, // webview被隐藏时保持状态，避免被重置,
         }
       );
-      const onDiskPath = vscode.Uri.file(
-        path.join(context.extensionPath, "imgs", "tt_family4.jpg")
+      const onCssApp = vscode.Uri.file(
+        path.join(context.extensionPath, "build/css", "app.1243445b.css")
       );
-      const catGifSrc = panel.webview.asWebviewUri(onDiskPath);
+      const onCssChunk = vscode.Uri.file(
+        path.join(context.extensionPath, "build/css", "chunk-vendors.e6a9aef6")
+      );
+      const onJsApp = vscode.Uri.file(
+        path.join(context.extensionPath, "build/js", "app.28ffb04f.js")
+      );
+      const onJsChunk = vscode.Uri.file(
+        path.join(
+          context.extensionPath,
+          "build/js",
+          "chunk-vendors.cce5f536.js"
+        )
+      );
+      const cssApp = panel.webview.asWebviewUri(onCssApp);
+      const cssChunk = panel.webview.asWebviewUri(onCssChunk);
+      const jsApp = panel.webview.asWebviewUri(onJsApp);
+      const jsChunk = panel.webview.asWebviewUri(onJsChunk);
       // And set its HTML content
-      panel.webview.html = getWebviewContent(catGifSrc);
+      panel.webview.html = getWebviewContent(cssApp, cssChunk, jsApp, jsChunk);
     })
   );
 
   context.subscriptions.push(disposable);
   context.subscriptions.push(customeEvent);
 }
-function getWebviewContent(value: vscode.Uri) {
+function getWebviewContent(
+  _cssApp: vscode.Uri,
+  _cssChunk: vscode.Uri,
+  _jsApp: vscode.Uri,
+  _jsChunk: vscode.Uri
+) {
   return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Coding</title>
-</head>
-<body>
-    <img src="${value}" width="300" />
-</body>
-</html>`;
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href="favicon.ico" />
+    <title>jsonto</title>
+    <script defer="defer" src="${_jsChunk}"></script>
+    <script defer="defer" src="${_jsApp}"></script>
+    <link href="${_cssChunk}" rel="stylesheet" />
+    <link href="${_cssApp}" rel="stylesheet" />
+  </head>
+  <body>
+    <noscript
+      ><strong
+        >We're sorry but jsonto doesn't work properly without JavaScript
+        enabled. Please enable it to continue.</strong
+      ></noscript
+    >
+    <div id="app"></div>
+  </body>
+  <style>
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100vh;
+      box-sizing: border-box;
+      padding: 20px 0;
+      overflow: hidden;
+    }
+		.el-textarea__inner {
+			width: 100%;
+			color:rgb(96, 98, 102);
+			padding: 5px 11px;
+			box-sizing: border-box;
+			line-height: 1.5;
+			font-size 14px;
+			background: white;
+		}
+		.is-disabled {
+			background: rgb(245, 247, 250);
+			color:rgb(96, 98, 102);
+		}
+		.el-button {
+			height: 30px;
+			width: 100px;
+			text-align: center;
+			background: rgb(64, 158, 255);
+			color: #fff;
+			border: none;
+			margin-right: 10px;
+		}
+		.el-button--warning{
+			background:rgb(230, 162, 60);
+		}
+  </style>
+</html>
+`;
 }
 // this method is called when your extension is deactivated
 export function deactivate() {}
