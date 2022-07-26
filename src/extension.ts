@@ -4,7 +4,7 @@
  * @Author: null
  * @Date: 2022-07-25 22:50:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2022-07-26 00:06:03
+ * @LastEditTime: 2022-07-26 00:14:30
  */
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
@@ -91,6 +91,8 @@ function getWebviewContent(
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" href="favicon.ico" />
     <title>jsonto</title>
+		<link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+  	<script src="https://unpkg.com/element-plus"></script>
     <script defer="defer" src="${_jsChunk}"></script>
     <script defer="defer" src="${_jsApp}"></script>
     <link href="${_cssChunk}" rel="stylesheet" />

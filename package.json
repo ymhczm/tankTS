@@ -1,11 +1,23 @@
 {
-  "name": "json2ts",
-  "displayName": "json2ts",
+  "name": "tankTS",
+  "displayName": "tankTS",
   "description": "",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.69.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ymhczm/json2ts.git"
+  },
+  "keywords": [
+    "json",
+    "ts",
+    "vscode",
+    "interface",
+    "type"
+  ],
+  "publisher": "tankTS",
   "categories": [
     "Other"
   ],
