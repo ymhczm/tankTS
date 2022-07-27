@@ -14,9 +14,9 @@
 Json to TS Interface tool
 
 快捷键：command + shift + p
-![image]("https://raw.githubusercontent.com/ymhczm/tankTS/main/imgs/step1.png")
+![](imgs/step1.png)
 
-![image]("https://github.com/ymhczm/tankTS/imgs/step2.png")
+![](imgs/step2.png)
 
 ### For more information
 
