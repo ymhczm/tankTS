@@ -4,7 +4,7 @@
  * @Author: null
  * @Date: 2022-07-25 22:50:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2022-07-27 16:28:55
+ * @LastEditTime: 2022-07-27 16:35:53
 -->
 
 # tankTS README
@@ -14,8 +14,8 @@
 Json to TS Interface tool
 
 快捷键：command + shift + p
-![image]("./imgs/step1.png")
-![image]("./imgs/step2.png")
+![image]("https://prod-mpp-loyalty-booster-point-mall-image.oss-cn-shanghai.aliyuncs.com/image/member-tt/step1.png")
+![image]("https://prod-mpp-loyalty-booster-point-mall-image.oss-cn-shanghai.aliyuncs.com/image/member-tt/step2.png")
 
 ### For more information
 
