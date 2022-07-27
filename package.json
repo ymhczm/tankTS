@@ -6,9 +6,10 @@
   "engines": {
     "vscode": "^1.69.0"
   },
+  "URL": "https://github.com",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ymhczm/json2ts.git"
+    "url": "https://github.com/ymhczm/tankTS"
   },
   "keywords": [
     "json",
