@@ -14,8 +14,8 @@
 Json to TS Interface tool
 
 快捷键：command + shift + p
-![image]("https://prod-mpp-loyalty-booster-point-mall-image.oss-cn-shanghai.aliyuncs.com/image/member-tt/step1.png")
-![image]("https://prod-mpp-loyalty-booster-point-mall-image.oss-cn-shanghai.aliyuncs.com/image/member-tt/step2.png")
+![image]("")
+![image]("")
 
 ### For more information
 
