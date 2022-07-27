@@ -4,7 +4,7 @@
  * @Author: null
  * @Date: 2022-07-25 22:50:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2022-07-27 16:35:53
+ * @LastEditTime: 2022-07-27 17:06:21
 -->
 
 # tankTS README
@@ -14,8 +14,9 @@
 Json to TS Interface tool
 
 快捷键：command + shift + p
-![image]("https://github.com/ymhczm/tankTS/imgs/step1.png")
-![image]("https://github.com/ymhczm/tankTS/imgs/step2.png")
+![](imgs/step1.png)
+
+![](imgs/step2.png)
 
 ### For more information
 
