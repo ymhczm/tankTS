@@ -4,11 +4,12 @@
  * @Author: null
  * @Date: 2022-07-25 22:50:21
  * @LastEditors: sueRimn
- * @LastEditTime: 2022-07-26 00:14:30
+ * @LastEditTime: 2022-07-30 15:52:00
  */
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import path = require("path");
+import * as fs from "fs/promises";
 import * as vscode from "vscode";
 
 // this method is called when your extension is activated
@@ -35,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
   context.subscriptions.push(
-    vscode.commands.registerCommand("json2ts.ts", () => {
+    vscode.commands.registerCommand("json2ts.ts", async () => {
       // Create and show a new webview
       const panel = vscode.window.createWebviewPanel(
         "ts2code",
@@ -49,40 +50,45 @@ export function activate(context: vscode.ExtensionContext) {
           retainContextWhenHidden: true, // webview被隐藏时保持状态，避免被重置,
         }
       );
-      const onCssApp = vscode.Uri.file(
-        path.join(context.extensionPath, "build/css", "app.1243445b.css")
+      const cssPath = path.resolve(context.extensionPath, "build/css");
+      const cssPaths = await fs.readdir(cssPath);
+      const jsPath = path.resolve(context.extensionPath, "build/js");
+      const jsPaths = await fs.readdir(jsPath);
+      let cssLinks = ""; // 生成css的链接
+      let jsLinks = ""; // 生成js的链接
+      cssPaths.forEach((item) => {
+        const css = vscode.Uri.file(
+          path.join(context.extensionPath, "build/css", item)
+        );
+        cssLinks =
+          cssLinks +
+          ` <link href="${panel.webview.asWebviewUri(
+            css
+          )}" rel="stylesheet" />`;
+      });
+      jsPaths.forEach((item) => {
+        const js = vscode.Uri.file(
+          path.join(context.extensionPath, "build/js", item)
+        );
+
+        jsLinks =
+          jsLinks +
+          ` <script defer="defer" src="${panel.webview.asWebviewUri(
+            js
+          )}"></script>`;
+      });
+      vscode.window.showInformationMessage(
+        JSON.stringify("webview open success")
       );
-      const onCssChunk = vscode.Uri.file(
-        path.join(context.extensionPath, "build/css", "chunk-vendors.e6a9aef6")
-      );
-      const onJsApp = vscode.Uri.file(
-        path.join(context.extensionPath, "build/js", "app.28ffb04f.js")
-      );
-      const onJsChunk = vscode.Uri.file(
-        path.join(
-          context.extensionPath,
-          "build/js",
-          "chunk-vendors.cce5f536.js"
-        )
-      );
-      const cssApp = panel.webview.asWebviewUri(onCssApp);
-      const cssChunk = panel.webview.asWebviewUri(onCssChunk);
-      const jsApp = panel.webview.asWebviewUri(onJsApp);
-      const jsChunk = panel.webview.asWebviewUri(onJsChunk);
       // And set its HTML content
-      panel.webview.html = getWebviewContent(cssApp, cssChunk, jsApp, jsChunk);
+      panel.webview.html = getWebviewContent(cssLinks, jsLinks);
     })
   );
 
   context.subscriptions.push(disposable);
   context.subscriptions.push(customeEvent);
 }
-function getWebviewContent(
-  _cssApp: vscode.Uri,
-  _cssChunk: vscode.Uri,
-  _jsApp: vscode.Uri,
-  _jsChunk: vscode.Uri
-) {
+function getWebviewContent(css: any, jsLinks: string) {
   return `<!DOCTYPE html>
 <html lang="">
   <head>
@@ -91,12 +97,8 @@ function getWebviewContent(
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" href="favicon.ico" />
     <title>jsonto</title>
-		<link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
-  	<script src="https://unpkg.com/element-plus"></script>
-    <script defer="defer" src="${_jsChunk}"></script>
-    <script defer="defer" src="${_jsApp}"></script>
-    <link href="${_cssChunk}" rel="stylesheet" />
-    <link href="${_cssApp}" rel="stylesheet" />
+    ${jsLinks}
+    ${css}
   </head>
   <body>
     <noscript
@@ -116,31 +118,6 @@ function getWebviewContent(
       padding: 20px 0;
       overflow: hidden;
     }
-		.el-textarea__inner {
-			width: 100%;
-			color:rgb(96, 98, 102);
-			padding: 5px 11px;
-			box-sizing: border-box;
-			line-height: 1.5;
-			font-size 14px;
-			background: white;
-		}
-		.is-disabled {
-			background: rgb(245, 247, 250);
-			color:rgb(96, 98, 102);
-		}
-		.el-button {
-			height: 30px;
-			width: 100px;
-			text-align: center;
-			background: rgb(64, 158, 255);
-			color: #fff;
-			border: none;
-			margin-right: 10px;
-		}
-		.el-button--warning{
-			background:rgb(230, 162, 60);
-		}
   </style>
 </html>
 `;
